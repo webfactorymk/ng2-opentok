@@ -1,0 +1,67 @@
+{
+  "name": "ng2-opentok",
+  "version": "0.0.1",
+  "scripts": {
+    "copy": "node tools/copy-package.js && node tools/cleanup.js",
+    "bundle": "rimraf dist && rollup -c rollup.config.umd.js && rollup -c rollup.config.esm.js && tsc && ngc",
+    "postbundle": "node tools/remove-code.js",
+    "build": "npm run bundle && npm run copy",
+    "ngc-build": "ngc -p ./tsconfig-ngc.json",
+    "publish": "cd ./dist && npm publish",
+    "main": "opentok.umd.js",
+    "jsnext:main": "opentok.esm.js",
+    "module": "opentok.esm.js",
+    "types": "opentok.d.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/WebFactoryMk/ng2-opentok"
+  },
+  "author": {
+    "name": "WF | Snezhana Dichevska",
+    "email": "snezhana.dichevska@webfactory.mk"
+  },
+  "keywords": [
+    "angular"
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/WebFactoryMk/ng2-opentok/issues"
+  },
+  "devDependencies": {
+    "@angular/common": "^4.0.0",
+    "@angular/compiler": "^4.3.3",
+    "@angular/compiler-cli": "^4.3.3",
+    "@angular/core": "^4.0.0",
+    "@angular/platform-browser": "^4.0.0",
+    "@angular/platform-browser-dynamic": "^4.0.0",
+    "@compodoc/compodoc": "^1.0.0-beta.10",
+    "@types/jasmine": "2.5.38",
+    "@types/node": "~6.0.60",
+    "codelyzer": "~2.0.0",
+    "core-js": "^2.4.1",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-rollup": "^2.11.0",
+    "node-sass": "^4.5.2",
+    "node-sass-tilde-importer": "^1.0.0",
+    "node-watch": "^0.5.2",
+    "protractor": "~5.1.0",
+    "rollup": "^0.41.6",
+    "rollup-plugin-commonjs": "^8.1.0",
+    "rollup-plugin-node-builtins": "^2.1.2",
+    "rollup-plugin-node-resolve": "^3.0.0",
+    "rollup-plugin-typescript": "^0.8.1",
+    "run-sequence": "^1.2.2",
+    "rxjs": "^5.1.0",
+    "ts-node": "~2.0.0",
+    "tslint": "~4.5.0",
+    "typescript": "^2.2.2",
+    "uglify-js": "^3.0.27",
+    "zone.js": "^0.8.4"
+  },
+  "engines": {
+    "node": ">=6.0.0"
+  }
+}
