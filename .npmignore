@@ -41,5 +41,5 @@ tools/*
 config-library.js
 rollup.config.esm.js
 rollup.config.umd.js
-tsconfig.json
+#tsconfig.json
 

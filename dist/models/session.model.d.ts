@@ -1,0 +1,48 @@
+import { OTSignal } from "./signal.model";
+import { OTSubscriber } from "./subscriber.model";
+import { Observable } from "rxjs";
+import { OTPublisher } from "./publisher.model";
+import { OTConnection } from "./connection.model";
+import { OTCapabilities } from "./capabilities.model";
+import { OTStream } from "./stream.model";
+import { IOTEventListener } from "../shared/event-listener.interface";
+import { OTEventBase } from "./events/shared/event-base.model";
+export declare const SESSION_EVENTS: {
+    connectionCreated: string;
+    connectionDestroyed: string;
+    sessionConnected: string;
+    sessionDisconnected: string;
+    sessionReconnecting: string;
+    sessionReconnected: string;
+    streamCreated: string;
+    streamDestroyed: string;
+    streamPropertyChanged: string;
+};
+export declare class OTSession implements IOTEventListener {
+    private _session;
+    private _connection;
+    private _capabilitites;
+    private _sessionId;
+    constructor(session: any);
+    static init(apiKey: string, sessionId: string): OTSession;
+    getConnection(): OTConnection;
+    getCapabilities(): OTCapabilities;
+    getSessionId(): string;
+    off(event?: string, context?: Object): Observable<OTEventBase>;
+    on(event: string, context?: Object): Observable<OTEventBase>;
+    once(event: string, context?: Object): Observable<OTEventBase>;
+    connect(token: string): Observable<boolean>;
+    disconnect(): void;
+    forceDisconnect(connection: OTConnection): Observable<void>;
+    forceUnpublish(stream: OTStream): Observable<void>;
+    getPublisherForStream(stream: OTStream): OTPublisher;
+    getSubscribersForStream(stream: OTStream): Array<OTSubscriber>;
+    onSignal(signal: OTSignal): Observable<OTSignal>;
+    publish(publisher: OTPublisher): Observable<boolean>;
+    signal(signal: OTSignal): Observable<boolean>;
+    subscribeToStream(stream: OTStream, subscriberContainer: string, subscriberProperties?: {}): OTSubscriber;
+    unpublish(publisher: OTPublisher): void;
+    unsubscribe(subscriber: OTSubscriber): void;
+    canPublish(): boolean;
+    private _mapEvent(eventName, event);
+}

@@ -1,0 +1,32 @@
+import { OTSignal } from "./models/signal.model";
+import { Observable } from "rxjs";
+import { OpentokConfig } from "./opentok.config";
+import { OTEventBase } from "./models/events/shared/event-base.model";
+export declare class OpentokService {
+    private opentokConfig;
+    private _apiKey;
+    private _session;
+    private _publisher;
+    private _subscriber;
+    private _publisherTag;
+    private _subscriberTag;
+    private _isVideoActive;
+    constructor(opentokConfig: OpentokConfig);
+    isWebRTCSupported(): boolean;
+    connectToSession(sessionId: string, token: string, publisherTag?: string, subscriberTag?: string): Observable<boolean>;
+    call(): Observable<boolean>;
+    hangUp(): void;
+    publishVideo(show: boolean): void;
+    onIncomingCall(): Observable<OTEventBase>;
+    onEndCall(): Observable<OTEventBase>;
+    onNetworkFailedForPublisher(): Observable<OTEventBase>;
+    getSubscriberScreenshot(): string;
+    onVideoChanged(): Observable<OTEventBase>;
+    sendSignal(signalType: string, data?: string): Observable<boolean>;
+    onSignal(signalType: string): Observable<OTSignal>;
+    onReconnecting(): Observable<OTEventBase>;
+    onReconnected(): void;
+    private _initPublisher();
+    onOpenMediaAccessDialog(): Observable<OTEventBase>;
+    onMediaAccessDenied(): Observable<OTEventBase>;
+}

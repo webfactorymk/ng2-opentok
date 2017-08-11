@@ -7,7 +7,7 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "outDir": "./dist",
-    "lib": [ "es2015", "dom" ],
+    "lib":  ["es5", "dom", "es6", "es2015.iterable", "es7"],
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
     "declaration":true
