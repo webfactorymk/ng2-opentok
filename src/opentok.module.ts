@@ -27,6 +27,7 @@ export * from "./models/events/stream-property-changed-event.model"
 export * from "./models/events/video-dimensions-changed-event.model"
 export * from "./models/events/video-element-created-event.model"
 export * from "./models/events/video-enabled-chnaged-event.model"
+export * from "./models/events/signal-event.model"
 
 @NgModule()
 

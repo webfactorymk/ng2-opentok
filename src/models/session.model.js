@@ -1,17 +1,18 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-var signal_model_1 = require("./signal.model");
 var subscriber_model_1 = require("./subscriber.model");
 var publisher_model_1 = require("./publisher.model");
 var observables_util_service_1 = require("../shared/observables-util.service");
 var event_model_1 = require("./events/event.model");
 var connection_model_1 = require("./connection.model");
 var capabilities_model_1 = require("./capabilities.model");
+var event_base_model_1 = require("./events/shared/event-base.model");
 var connection_event_model_1 = require("./events/connection-event.model");
 var session_connect_event_model_1 = require("./events/session-connect-event.model");
 var session_disconnect_event_model_1 = require("./events/session-disconnect-event.model");
 var stream_event_model_1 = require("./events/stream-event.model");
 var stream_property_changed_event_model_1 = require("./events/stream-property-changed-event.model");
+var signal_event_model_1 = require("./events/signal-event.model");
 // Opentok session
 // https://tokbox.com/developer/guides/connect-session/js/#initialize_session
 // https://tokbox.com/developer/sdks/js/reference/Session.html
@@ -25,6 +26,7 @@ exports.SESSION_EVENTS = {
     streamCreated: "streamCreated",
     streamDestroyed: "streamDestroyed",
     streamPropertyChanged: "streamPropertyChanged",
+    signal: "signal"
 };
 var OTSession = (function () {
     function OTSession(session) {
@@ -100,11 +102,9 @@ var OTSession = (function () {
         });
     };
     // Listen to signal
-    // https://tokbox.com/developer/sdks/js/reference/Session.html#signal
+    //https://tokbox.com/developer/sdks/js/reference/SignalEvent.html
     OTSession.prototype.onSignal = function (signal) {
-        return this.on(signal.getSignalEvent()).map(function (signal) {
-            return new signal_model_1.OTSignal(signal);
-        });
+        return this.on(signal.getSignalEvent());
     };
     //https://tokbox.com/developer/sdks/js/reference/Session.html#publish
     OTSession.prototype.publish = function (publisher) {
@@ -132,42 +132,51 @@ var OTSession = (function () {
     };
     OTSession.prototype._mapEvent = function (eventName, event) {
         var e;
-        switch (eventName) {
-            case exports.SESSION_EVENTS.connectionCreated: {
-                e = new connection_event_model_1.OTConnectionEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.connectionDestroyed: {
-                e = new connection_event_model_1.OTConnectionEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.sessionConnected: {
-                e = new session_connect_event_model_1.OTSessionConnectEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.sessionDisconnected: {
-                e = new session_disconnect_event_model_1.OTSessionDisconnectEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.sessionReconnecting: {
-                e = new event_model_1.OTEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.sessionReconnected: {
-                e = new event_model_1.OTEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.streamCreated: {
-                e = new stream_event_model_1.OTStreamEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.streamDestroyed: {
-                e = new stream_event_model_1.OTStreamEvent(event);
-                break;
-            }
-            case exports.SESSION_EVENTS.streamPropertyChanged: {
-                e = new stream_property_changed_event_model_1.OTStreamPropertyChangedEvent(event);
-                break;
+        if (eventName.indexOf(exports.SESSION_EVENTS.signal) != -1) {
+            e = new signal_event_model_1.OTSignalEvent(event);
+        }
+        else {
+            switch (eventName) {
+                case exports.SESSION_EVENTS.connectionCreated: {
+                    e = new connection_event_model_1.OTConnectionEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.connectionDestroyed: {
+                    e = new connection_event_model_1.OTConnectionEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.sessionConnected: {
+                    e = new session_connect_event_model_1.OTSessionConnectEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.sessionDisconnected: {
+                    e = new session_disconnect_event_model_1.OTSessionDisconnectEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.sessionReconnecting: {
+                    e = new event_model_1.OTEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.sessionReconnected: {
+                    e = new event_model_1.OTEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.streamCreated: {
+                    e = new stream_event_model_1.OTStreamEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.streamDestroyed: {
+                    e = new stream_event_model_1.OTStreamEvent(event);
+                    break;
+                }
+                case exports.SESSION_EVENTS.streamPropertyChanged: {
+                    e = new stream_property_changed_event_model_1.OTStreamPropertyChangedEvent(event);
+                    break;
+                }
+                default: {
+                    e = new event_base_model_1.OTEventBase(event);
+                    break;
+                }
             }
         }
         return e;
