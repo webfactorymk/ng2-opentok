@@ -7,6 +7,7 @@ import { OTCapabilities } from "./capabilities.model";
 import { OTStream } from "./stream.model";
 import { IOTEventListener } from "../shared/event-listener.interface";
 import { OTEventBase } from "./events/shared/event-base.model";
+import { OTSignalEvent } from "./events/signal-event.model";
 export declare const SESSION_EVENTS: {
     connectionCreated: string;
     connectionDestroyed: string;
@@ -17,6 +18,7 @@ export declare const SESSION_EVENTS: {
     streamCreated: string;
     streamDestroyed: string;
     streamPropertyChanged: string;
+    signal: string;
 };
 export declare class OTSession implements IOTEventListener {
     private _session;
@@ -37,7 +39,7 @@ export declare class OTSession implements IOTEventListener {
     forceUnpublish(stream: OTStream): Observable<void>;
     getPublisherForStream(stream: OTStream): OTPublisher;
     getSubscribersForStream(stream: OTStream): Array<OTSubscriber>;
-    onSignal(signal: OTSignal): Observable<OTSignal>;
+    onSignal(signal: OTSignal): Observable<OTSignalEvent>;
     publish(publisher: OTPublisher): Observable<boolean>;
     signal(signal: OTSignal): Observable<boolean>;
     subscribeToStream(stream: OTStream, subscriberContainer: string, subscriberProperties?: {}): OTSubscriber;

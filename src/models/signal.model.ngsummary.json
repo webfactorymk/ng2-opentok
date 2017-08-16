@@ -1,1 +1,0 @@
-{"summaries":[{"symbol":{"__symbol":0,"members":[]},"metadata":{"__symbolic":"class","members":{"__ctor__":[{"__symbolic":"constructor","parameters":[null,null,null]}],"getSignalEvent":[{"__symbolic":"method"}],"getSignal":[{"__symbolic":"method"}]}}}],"symbols":[{"__symbol":0,"name":"OTSignal","filePath":"/Users/wf-sdichevska/ng2-opentok/src/models/signal.model.d.ts"}]}

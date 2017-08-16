@@ -1,13 +1,4 @@
 "use strict";
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 var core_1 = require("@angular/core");
 var session_model_1 = require("./models/session.model");
@@ -29,15 +20,18 @@ var OpentokService = (function () {
     };
     ;
     OpentokService.prototype.connectToSession = function (sessionId, token, publisherTag, subscriberTag) {
+        var _this = this;
         if (publisherTag)
             this._publisherTag = publisherTag;
         if (subscriberTag)
             this._subscriberTag = subscriberTag;
         this._session = session_model_1.OTSession.init(this._apiKey, sessionId);
-        return this._session.connect(token);
+        return this._session.connect(token).map(function () {
+            return _this._session;
+        });
     };
-    OpentokService.prototype.call = function () {
-        this._initPublisher();
+    OpentokService.prototype.call = function (publisherProperties) {
+        this._initPublisher(publisherProperties);
         return this._session.publish(this._publisher);
     };
     OpentokService.prototype.hangUp = function () {
@@ -55,20 +49,17 @@ var OpentokService = (function () {
             this._publisher.destroy();
             this._publisher = null;
         }
+        //TODO: check this for off and destroy
         if (this._subscriber) {
+            this._subscriber.off();
             this._subscriber = null;
         }
     };
     OpentokService.prototype.publishVideo = function (show) {
         this._publisher.publishVideo(show);
     };
-    OpentokService.prototype.onIncomingCall = function () {
+    OpentokService.prototype.onIncomingCall = function (subscriberProperties) {
         var _this = this;
-        var subscriberProperties = {
-            insertMode: 'append',
-            width: '100%',
-            height: '100%'
-        };
         return this._session.on(session_model_1.SESSION_EVENTS.streamCreated).do(function (event) {
             if (!_this._subscriber) {
                 _this._subscriber = _this._session.subscribeToStream(event.stream, _this._subscriberTag, subscriberProperties);
@@ -76,7 +67,6 @@ var OpentokService = (function () {
             }
         });
     };
-    //https://tokbox.com/developer/sdks/js/reference/ConnectionEvent.html
     OpentokService.prototype.onEndCall = function () {
         return this._session.on(session_model_1.SESSION_EVENTS.connectionDestroyed);
     };
@@ -111,59 +101,25 @@ var OpentokService = (function () {
         return this._session.on(session_model_1.SESSION_EVENTS.sessionReconnecting);
     };
     OpentokService.prototype.onReconnected = function () {
-        this._session.on(session_model_1.SESSION_EVENTS.sessionReconnected);
+        return this._session.on(session_model_1.SESSION_EVENTS.sessionReconnected);
     };
-    // onStreamDestroyed(onComplete: () => void) {
-    //   this._subscribeToDestroyedStreams(onComplete);
-    // }
-    //
-    // onSubscriberConnected(onComplete: (event) => void) {
-    //   var eventHandler = (event) => {
-    //     if (onComplete) onComplete(event);
-    //   };
-    //
-    //   this._subscriber.addEventListener(SUBSCRIBER_EVENTS.connected, eventHandler);
-    // }
-    //
-    // onSubscriberDisconnected(onComplete: (event) => void) {
-    //   var eventHandler = (event) => {
-    //     if (onComplete) onComplete(event);
-    //   };
-    //
-    //   this._subscriber.addEventListener(SUBSCRIBER_EVENTS.disconnected, eventHandler);
-    // }
-    //
-    // onSubscriberDestroyed() {
-    //   this._subscriber.on(SUBSCRIBER_EVENTS.destroyed);
-    // }
-    OpentokService.prototype._initPublisher = function () {
-        var publisherProperties = {
-            insertMode: 'append',
-            width: '100%',
-            height: '100%',
-            usePreviousDeviceSelection: true
-        };
-        this._publisher = publisher_model_1.OTPublisher.init(this._publisherTag, publisherProperties);
-    };
-    // private _subscribeToDestroyedStreams() {
-    //     return this._session.on(SESSION_EVENTS.streamDestroyed);
-    // }
-    //
-    //
     OpentokService.prototype.onOpenMediaAccessDialog = function () {
         return this._publisher.on(publisher_model_1.PUBLISHER_EVENTS.accessDialogOpened);
     };
     OpentokService.prototype.onMediaAccessDenied = function () {
-        var _this = this;
-        return this._publisher.on(publisher_model_1.PUBLISHER_EVENTS.accessDenied).do(function () {
-            _this.hangUp();
-        });
+        return this._publisher.on(publisher_model_1.PUBLISHER_EVENTS.accessDenied);
+    };
+    OpentokService.prototype._initPublisher = function (publisherProperties) {
+        this._publisher = publisher_model_1.OTPublisher.init(this._publisherTag, publisherProperties);
     };
     return OpentokService;
 }());
-OpentokService = __decorate([
-    core_1.Injectable(),
-    __metadata("design:paramtypes", [opentok_config_1.OpentokConfig])
-], OpentokService);
+OpentokService.decorators = [
+    { type: core_1.Injectable },
+];
+/** @nocollapse */
+OpentokService.ctorParameters = function () { return [
+    { type: opentok_config_1.OpentokConfig, },
+]; };
 exports.OpentokService = OpentokService;
 //# sourceMappingURL=opentok.service.js.map

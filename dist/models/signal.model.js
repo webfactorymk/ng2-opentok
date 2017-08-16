@@ -1,6 +1,7 @@
-// Opentok signaling https://tokbox.com/developer/guides/signaling/js/#send_signal_to_client
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+// Opentok signaling https://tokbox.com/developer/guides/signaling/js/#send_signal_to_client
+var util_1 = require("util");
 var OTSignal = (function () {
     function OTSignal(type, data, to) {
         this.type = type;
@@ -19,7 +20,10 @@ var OTSignal = (function () {
             type: this.type,
             to: this.to
         };
-        Object.keys(signalAsHash).forEach(function (signalProperty) { return (signalAsHash[signalProperty] == null) && delete signalAsHash[signalProperty]; });
+        Object.keys(signalAsHash).forEach(function (signalProperty) {
+            if (util_1.isNullOrUndefined(signalAsHash[signalProperty]))
+                delete signalAsHash[signalProperty];
+        });
         return signalAsHash;
     };
     return OTSignal;

@@ -1,1 +1,1 @@
-{"version":3,"file":"session-connect-event.model.js","sourceRoot":"","sources":["../../../src/models/events/session-connect-event.model.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,8DAAsD;AAEtD;IAA2C,yCAAW;IAAtD;;IAEA,CAAC;IAAD,4BAAC;AAAD,CAAC,AAFD,CAA2C,8BAAW,GAErD;AAFY,sDAAqB"}
+{"version":3,"sources":["../../../src/models/events/session-connect-event.model.ts"],"names":[],"mappings":";;;;;;;;;;;;AAAA,8DAAsD;AAEtD;IAA2C,yCAAW;IAAtD;;IAEA,CAAC;IAAD,4BAAC;AAAD,CAFA,AAEC,CAF0C,8BAAW,GAErD;AAFY,sDAAqB","file":"session-connect-event.model.js","sourceRoot":""}
