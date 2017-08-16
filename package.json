@@ -5,7 +5,6 @@
   "scripts": {
     "bundle": "rm -rf dist && ngc",
     "build": "npm run bundle",
-    "ngc-build": "node_modules/.bin/ngc -p tsconfig.json",
     "publish": "cd ./dist && npm publish",
     "main": "opentok.umd.js",
     "jsnext:main": "opentok.esm.js",
