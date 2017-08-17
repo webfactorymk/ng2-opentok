@@ -2,12 +2,12 @@
 
 ## Description
 
-This library is a angular 2 wrapper in typescript of [opentok.js library(web)](https://tokbox.com/developer/sdks/js/). Full description of the opentok platform can be found [here](https://tokbox.com/developer/guides/basics/).
+This library is an angular 2 wrapper in typescript of [opentok.js library(web)](https://tokbox.com/developer/sdks/js/). Full description of the opentok platform can be found [here](https://tokbox.com/developer/guides/basics/).
 It is still in beta version, so any contribution is always welcome.
 
 ## Documentation
 
-The documentation for opentok.js library can be found [here](https://tokbox.com/developer/sdks/js) and used as a reference when using this library.
+The documentation for opentok.js can be found [here](https://tokbox.com/developer/sdks/js) and used as a reference when using this library.
 
 ## Installation
 To install this library, run:
