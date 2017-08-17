@@ -20,7 +20,6 @@ export class ObservablesUtil {
     return Observable.create((observer: Observer<any>) => {
       object[func](param, (event:any) => {
         observer.next(event);
-        observer.complete();
       }, context);
     });
   }
