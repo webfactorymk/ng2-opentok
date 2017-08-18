@@ -24,33 +24,29 @@ export class OpentokService {
     private _session: OTSession;
     private _publisher: OTPublisher;
     private _subscriber: OTSubscriber;
-    private _publisherTag: string = "publisher";
-    private _subscriberTag: string = "subscriber";
     private _isVideoActive: boolean = false;
 
     constructor(private opentokConfig: OpentokConfig) {
         this._apiKey = opentokConfig.apiKey;
     }
 
-    isWebRTCSupported() {
+    isWebRTCSupported():boolean {
         return OT.checkSystemRequirements() == HAS_SYSTEM_REQUIREMENTS;
     };
 
-    connectToSession(sessionId: string, token: string, publisherTag?: string, subscriberTag?: string):Observable<OTSession> {
-        if (publisherTag) this._publisherTag = publisherTag;
-        if (subscriberTag) this._subscriberTag = subscriberTag;
+    connectToSession(sessionId: string, token: string):Observable<OTSession> {
         this._session = OTSession.init(this._apiKey, sessionId);
         return this._session.connect(token).map(()=>{
             return this._session;
         });
     }
 
-    call(publisherProperties?:{}) {
-        this._initPublisher(publisherProperties);
+    call(publisherTag?: string, publisherProperties?:{}):Observable<boolean> {
+        this._initPublisher(publisherTag, publisherProperties);
         return this._session.publish(this._publisher);
     }
 
-    hangUp() {
+    hangUp():void {
         if (this._session) {
             if (this._publisher) this._session.unpublish(this._publisher);
             if (this._subscriber) this._session.unsubscribe(this._subscriber);
@@ -63,22 +59,22 @@ export class OpentokService {
             this._publisher.destroy();
             this._publisher = null;
         }
-        //TODO: check this for off and destroy
+
         if (this._subscriber) {
             this._subscriber.off();
             this._subscriber = null;
         }
     }
 
-    publishVideo(show: boolean) {
+    publishVideo(show: boolean):void {
         this._publisher.publishVideo(show);
     }
 
-    onIncomingCall(subscriberProperties?: {}): Observable<OTStreamEvent> {
+    onIncomingCall(subscriberTag?: string, subscriberProperties?: {}): Observable<OTStreamEvent> {
         return this._session.on(SESSION_EVENTS.streamCreated).do((event: OTStreamEvent) => {
             if (!this._subscriber) {
-                this._subscriber = this._session.subscribeToStream(event.stream, this._subscriberTag, subscriberProperties);
-                this._isVideoActive = event.stream.hasAudio();
+                this._subscriber = this._session.subscribeToStream(event.stream, subscriberTag, subscriberProperties);
+                this._isVideoActive = event.stream.hasVideo();
             }
         });
     }
@@ -93,7 +89,7 @@ export class OpentokService {
         });
     }
 
-    getSubscriberScreenshot() {
+    getSubscriberScreenshot():string {
         return this._isVideoActive ? this._subscriber.getImageData() : null;
     }
 
@@ -108,12 +104,12 @@ export class OpentokService {
 
     //https://tokbox.com/developer/guides/signaling/js/
     // Signal type should be a string of only the custom type without the 'signal:' key as said in the documentation.
-    sendSignal(signalType: string, data?: string): Observable<boolean> {
+    sendSignal(signalType?: string, data?: string): Observable<boolean> {
         let OTsignal: OTSignal = new OTSignal(signalType, data);
         return this._session.signal(OTsignal);
     }
 
-    onSignal(signalType: string):Observable<OTSignalEvent> {
+    onSignal(signalType?: string):Observable<OTSignalEvent> {
         let OTsignal: OTSignal = new OTSignal(signalType);
         return this._session.onSignal(OTsignal);
     }
@@ -134,8 +130,8 @@ export class OpentokService {
         return this._publisher.on(PUBLISHER_EVENTS.accessDenied);
     }
 
-    private _initPublisher(publisherProperties?: {}){
-        this._publisher = OTPublisher.init(this._publisherTag, publisherProperties);
+    private _initPublisher(publisherTag?: string, publisherProperties?: {}){
+        this._publisher = OTPublisher.init(publisherTag, publisherProperties);
     }
 
 }

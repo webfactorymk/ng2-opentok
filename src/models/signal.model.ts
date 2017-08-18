@@ -6,15 +6,15 @@ export class OTSignal {
     private type: string;
     private event: string
 
-    constructor(type: string, data?: string, to?: any) {
-        this.type = type;
+    constructor(type?: string, data?: string, to?: any) {
+        if(type) this.type = type;
         this.event = this.getSignalEvent();
         if (to) this.to = to;
         if (data) this.data = data;
     }
 
     getSignalEvent(): string {
-        return this.type ? ('signal:' + this.type) : 'signal';
+        return isNullOrUndefined(this.type) ? 'signal' : ('signal:' + this.type);
     }
 
     getSignal(): Object {
