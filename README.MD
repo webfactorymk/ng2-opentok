@@ -18,7 +18,7 @@ To install this library, run:
 $ npm install ng2-opentok --save
 ```
 ## Use
-This library should be used as described in the official documentation for [Opentok](). This means you can follow their tutorials for creating a backend server, and use the new methods and classes available from this library that for the web application. The prerequirements stay the same though.
+This library should be used as described in the official documentation for [Opentok](). This means you can follow their tutorials for creating a backend server, and use the new service and classes available in this library. The prerequirements stay the same though.
 
 #### Prerequirements
 To use this library you need to have:
