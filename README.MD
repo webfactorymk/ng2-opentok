@@ -9,6 +9,8 @@ It is still in beta version, so any contribution is always welcome.
 
 The documentation for opentok.js can be found [here](https://tokbox.com/developer/sdks/js) and used as a reference when using this library.
 
+Here is a [wiki](https://github.com/webfactorymk/ng2-opentok/wiki/Opentok-service) with description of the methods provided by in this library.
+
 ## Installation
 To install this library, run:
 
@@ -32,7 +34,7 @@ To use this library you need to have:
 In order to use the library OpenTok, the client will need to have some authentication credentials — an API Key.
 The API key can be obtained from the valid [TokBox Account](https://id.tokbox.com/login?response_type=code&redirect_uri=https%3A%2F%2Ftokbox.com%2Faccount%2Fauth%2Fprovider%2Fcallback&state=eyJyZWRpcmVjdCI6Ii8ifQ%3D%3D&client_id=acountportalprod).
 
-Use the [DEMO](https://github.com/webfactorymk/ng2-opentok-demo) project to see how the library is used.
+Use the [DEMO](https://github.com/webfactorymk/ng2-opentok-demo) project and the [ng2-opentok documentation](https://github.com/webfactorymk/ng2-opentok/wiki/Opentok-service) to see how the library is used.
 After you have read the basic tutorial and obtained an api key, you can add to your Angular `AppModule`:
 
 ```typescript
