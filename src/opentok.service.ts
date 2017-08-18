@@ -122,11 +122,11 @@ export class OpentokService {
         return this._session.on(SESSION_EVENTS.sessionReconnected);
     }
 
-    onOpenMediaAccessDialog(): Observable<OTEventBase> {
+    onOpenMediaAccessDialog(): Observable<OTEvent> {
         return this._publisher.on(PUBLISHER_EVENTS.accessDialogOpened);
     }
 
-    onMediaAccessDenied(): Observable<OTEventBase> {
+    onMediaAccessDenied(): Observable<OTEvent> {
         return this._publisher.on(PUBLISHER_EVENTS.accessDenied);
     }
 
