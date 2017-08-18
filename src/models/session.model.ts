@@ -136,8 +136,6 @@ export class OTSession implements IOTEventListener {
 
     //https://tokbox.com/developer/sdks/js/reference/Session.html#signal
     signal(signal: OTSignal): Observable<boolean> {
-        console.log("Send signal: ")
-        console.log(signal.getSignal())
         return ObservablesUtil.getObservableMethod(this._session, 'signal', signal.getSignal());
     }
 
