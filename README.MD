@@ -3,7 +3,7 @@
 ## Description
 
 This library is an angular 2 wrapper in typescript of [opentok.js library(web)](https://tokbox.com/developer/sdks/js/). Full description of the opentok platform can be found [here](https://tokbox.com/developer/guides/basics/).
-It is still in beta version, so any contribution is always welcome.
+This library is still in beta version, so any contribution is always welcome.
 
 ## Documentation
 
