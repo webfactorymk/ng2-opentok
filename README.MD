@@ -110,3 +110,5 @@ If you have any problems with pull request and want to contribute, contact [me](
 ## License
 
 MIT © [WF | Snezhana Dichevska](mailto:snezhana.dichevska@webfactory.mk)
+
+Developed by [SnezanaDichevska](https://github.com/SnezanaDichevska) 
