@@ -1,6 +1,6 @@
 {
   "name": "ng2-opentok",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "opentok.js",
   "scripts": {
     "bundle": "rm -rf dist && ngc",
@@ -32,14 +32,13 @@
     "url": "https://github.com/WebFactoryMk/ng2-opentok/issues"
   },
   "devDependencies": {
-      "@angular/common": "4.3.2",
-      "@angular/compiler-cli": "4.3.2",
-      "@angular/compiler": "4.3.2",
-      "@angular/core": "4.3.2",
-      "typescript": "2.2.1",
-
-      "rxjs": "5.2.0",
-      "zone.js": "0.8.4"
+    "@angular/common": "4.3.2",
+    "@angular/compiler-cli": "4.3.2",
+    "@angular/compiler": "4.3.2",
+    "@angular/core": "4.3.2",
+    "typescript": "2.2.1",
+    "rxjs": "5.2.0",
+    "zone.js": "0.8.4"
   },
   "engines": {
     "node": ">=6.0.0"
