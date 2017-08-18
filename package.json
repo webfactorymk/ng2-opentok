@@ -1,6 +1,6 @@
 {
   "name": "ng2-opentok",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "main": "opentok.js",
   "scripts": {
     "bundle": "rm -rf dist && ngc",
