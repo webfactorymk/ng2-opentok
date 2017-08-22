@@ -13,6 +13,7 @@ import {OTEventBase} from "./models/events/shared/event-base.model";
 import {OTConnectionEvent} from "./models/events/connection-event.model";
 import {OTEvent} from "./models/events/event.model";
 import {OTSignalEvent} from "./models/events/signal-event.model";
+import {OTAudioLevelUpdatedEvent} from "./models/events/audio-level-updated-event.model";
 
 declare var OT: any;
 const HAS_SYSTEM_REQUIREMENTS = 1;
@@ -126,8 +127,20 @@ export class OpentokService {
         return this._publisher.on(PUBLISHER_EVENTS.accessDialogOpened);
     }
 
+    onClosedMediaAccessDialog(): Observable<OTEvent> {
+        return this._publisher.on(PUBLISHER_EVENTS.accessDialogClosed);
+    }
+
+    onAudioLevelUpdated():Observable<OTAudioLevelUpdatedEvent>{
+        return this._publisher.on(PUBLISHER_EVENTS.audioLevelUpdated);
+    }
+
     onMediaAccessDenied(): Observable<OTEvent> {
         return this._publisher.on(PUBLISHER_EVENTS.accessDenied);
+    }
+
+    onMediaAccessAllowed(): Observable<OTEvent> {
+        return this._publisher.on(PUBLISHER_EVENTS.accessAllowed);
     }
 
     private _initPublisher(publisherTag?: string, publisherProperties?: {}){
