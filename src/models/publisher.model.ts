@@ -85,6 +85,7 @@ export class OTPublisher implements IOTEventListener {
     return new OTSession(this.opentokPublisher.session);
   }
 
+  // https://tokbox.com/developer/sdks/js/reference/Publisher.html#destroy
   destroy(): void {
     this.opentokPublisher.destroy();
     this.opentokPublisher = null;

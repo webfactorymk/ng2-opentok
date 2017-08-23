@@ -9,7 +9,6 @@ import {OTStreamEvent} from "./models/events/stream-event.model";
 import {OTSessionDisconnectEvent} from "./models/events/session-disconnect-event.model";
 import {OTStreamPropertyChangedEvent} from "./models/events/stream-property-changed-event.model";
 import {isNullOrUndefined} from "util";
-import {OTEventBase} from "./models/events/shared/event-base.model";
 import {OTConnectionEvent} from "./models/events/connection-event.model";
 import {OTEvent} from "./models/events/event.model";
 import {OTSignalEvent} from "./models/events/signal-event.model";
@@ -31,23 +30,28 @@ export class OpentokService {
         this._apiKey = opentokConfig.apiKey;
     }
 
-    isWebRTCSupported():boolean {
+    isWebRTCSupported(): boolean {
         return OT.checkSystemRequirements() == HAS_SYSTEM_REQUIREMENTS;
     };
 
-    connectToSession(sessionId: string, token: string):Observable<OTSession> {
+    connectToSession(sessionId: string, token: string): Observable<OTSession> {
         this._session = OTSession.init(this._apiKey, sessionId);
-        return this._session.connect(token).map(()=>{
+        return this._session.connect(token).map(() => {
             return this._session;
         });
     }
 
-    call(publisherTag?: string, publisherProperties?:{}):Observable<boolean> {
-        this._initPublisher(publisherTag, publisherProperties);
+    initCaller(publisherTag?: string, publisherProperties?: {}):OTPublisher {
+        this._publisher = OTPublisher.init(publisherTag, publisherProperties);
+        return this._publisher;
+
+    }
+
+    call(): Observable<boolean> {
         return this._session.publish(this._publisher);
     }
 
-    hangUp():void {
+    hangUp(): void {
         if (this._session) {
             if (this._publisher) this._session.unpublish(this._publisher);
             if (this._subscriber) this._session.unsubscribe(this._subscriber);
@@ -67,7 +71,7 @@ export class OpentokService {
         }
     }
 
-    publishVideo(show: boolean):void {
+    publishVideo(show: boolean): void {
         this._publisher.publishVideo(show);
     }
 
@@ -90,7 +94,7 @@ export class OpentokService {
         });
     }
 
-    getSubscriberScreenshot():string {
+    getSubscriberScreenshot(): string {
         return this._isVideoActive ? this._subscriber.getImageData() : null;
     }
 
@@ -110,7 +114,7 @@ export class OpentokService {
         return this._session.signal(OTsignal);
     }
 
-    onSignal(signalType?: string):Observable<OTSignalEvent> {
+    onSignal(signalType?: string): Observable<OTSignalEvent> {
         let OTsignal: OTSignal = new OTSignal(signalType);
         return this._session.onSignal(OTsignal);
     }
@@ -131,7 +135,7 @@ export class OpentokService {
         return this._publisher.on(PUBLISHER_EVENTS.accessDialogClosed);
     }
 
-    onAudioLevelUpdated():Observable<OTAudioLevelUpdatedEvent>{
+    onAudioLevelUpdated(): Observable<OTAudioLevelUpdatedEvent> {
         return this._publisher.on(PUBLISHER_EVENTS.audioLevelUpdated);
     }
 
@@ -141,10 +145,6 @@ export class OpentokService {
 
     onMediaAccessAllowed(): Observable<OTEvent> {
         return this._publisher.on(PUBLISHER_EVENTS.accessAllowed);
-    }
-
-    private _initPublisher(publisherTag?: string, publisherProperties?: {}){
-        this._publisher = OTPublisher.init(publisherTag, publisherProperties);
     }
 
 }
