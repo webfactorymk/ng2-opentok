@@ -92,17 +92,13 @@ export class OTSession implements IOTEventListener {
     disconnect(): void {
         if (this._session) {
             this._session.disconnect();
-            this._session = null;
         }
     }
 
     //https://tokbox.com/developer/sdks/js/reference/Session.html#forceDisconnect
     forceDisconnect(connection: OTConnection): Observable<void> {
         if (this._session) {
-            return ObservablesUtil.getObservableMethod(this._session, 'forceDisconnect', connection.getConnectionId())
-                .do(() => {
-                    this._session = null;
-                });
+            return ObservablesUtil.getObservableMethod(this._session, 'forceDisconnect', connection.getConnectionId());
         }
     }
 

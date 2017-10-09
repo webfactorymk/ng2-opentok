@@ -88,7 +88,6 @@ export class OTPublisher implements IOTEventListener {
   // https://tokbox.com/developer/sdks/js/reference/Publisher.html#destroy
   destroy(): void {
     this.opentokPublisher.destroy();
-    this.opentokPublisher = null;
   }
 
   //Returns the base-64-encoded string of PNG data representing the Publisher video.
