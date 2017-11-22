@@ -103,7 +103,7 @@ export class OpentokService {
             .filter((event: OTStreamPropertyChangedEvent) => {
                 return event.hasVideoChanged();
             }).do((event: OTStreamPropertyChangedEvent) => {
-                this._isVideoActive = !isNullOrUndefined(event.newValue);
+                this._isVideoActive = !!(event.newValue);
             });
     }
 
