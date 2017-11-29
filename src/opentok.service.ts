@@ -41,10 +41,10 @@ export class OpentokService {
         });
     }
 
-    initCaller(publisherTag?: string, publisherProperties?: {}):OTPublisher {
-        this._publisher = OTPublisher.init(publisherTag, publisherProperties);
-        return this._publisher;
-
+    initCaller(publisherTag?: string, publisherProperties?: {}): Observable<OTPublisher> {
+        return OTPublisher.init(publisherTag, publisherProperties).do((publisher: OTPublisher) => {
+            this._publisher = publisher;
+        });
     }
 
     call(): Observable<boolean> {
