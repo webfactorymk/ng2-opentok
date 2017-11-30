@@ -9,7 +9,23 @@ This library is still in beta version, so any contribution is always welcome.
 
 The documentation for opentok.js can be found [here](https://tokbox.com/developer/sdks/js) and used as a reference when using this library.
 
-Here is a [wiki](https://github.com/webfactorymk/ng2-opentok/wiki/Opentok-service) with description of the methods provided by in this library.
+Here is a [wiki](https://github.com/webfactorymk/ng2-opentok/wiki/Opentok-service) with description ONLY of the opentok service provided by in this library, to make the implementation of a simple video call between two users easier.
+
+Use the opentok official documentation to learn how to implement the logic with the help of the models wrapped in this library, for custom use and for video call between multiple users. The wiki does not contain information about them, use the files with code as reference:
+
+Basic models
+* [Subscriber](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/subscriber.model.ts)
+* [Stream](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/stream.model.ts)
+* [Signal](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/signal.model.ts)
+* [Session](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/session.model.ts)
+* [Publisher](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/publisher.model.ts)
+* [Connection](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/connection.model.ts)
+* [Capabilities](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/capabilities.model.ts)
+
+[Events](https://github.com/webfactorymk/ng2-opentok/tree/master/src/models/events)
+
+[Errors](https://github.com/webfactorymk/ng2-opentok/blob/master/src/models/error.constants.ts)
+
 
 ## Installation
 To install this library, run:
