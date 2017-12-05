@@ -8,7 +8,6 @@ import {OpentokConfig} from "./opentok.config";
 import {OTStreamEvent} from "./models/events/stream-event.model";
 import {OTSessionDisconnectEvent} from "./models/events/session-disconnect-event.model";
 import {OTStreamPropertyChangedEvent} from "./models/events/stream-property-changed-event.model";
-import {isNullOrUndefined} from "util";
 import {OTConnectionEvent} from "./models/events/connection-event.model";
 import {OTEvent} from "./models/events/event.model";
 import {OTSignalEvent} from "./models/events/signal-event.model";

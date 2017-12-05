@@ -46,12 +46,13 @@ export class OTPublisher implements IOTEventListener {
         return Observable.create((observer: Observer<any>) => {
             let publisher = new OTPublisher(OT.initPublisher(publisherContainer, properties, (error) => {
                 if (isNullOrUndefined(error)) {
+                    observer.next(publisher);
                     observer.complete();
                 } else {
                     observer.error(error);
                 }
             }));
-            observer.next(publisher);
+
         });
     }
 
