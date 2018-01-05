@@ -76,10 +76,8 @@ export class OpentokService {
 
     onIncomingCall(subscriberTag?: string, subscriberProperties?: {}): Observable<OTStreamEvent> {
         return this._session.on(SESSION_EVENTS.streamCreated).do((event: OTStreamEvent) => {
-            if (!this._subscriber) {
                 this._subscriber = this._session.subscribeToStream(event.stream, subscriberTag, subscriberProperties);
                 this._isVideoActive = event.stream.hasVideo();
-            }
         });
     }
 
