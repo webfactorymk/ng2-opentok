@@ -153,4 +153,8 @@ export class OpentokService {
         return this._publisher.on(PUBLISHER_EVENTS.accessAllowed);
     }
 
+    onStreamDestroyed(): Observable<OTEvent> {
+        return this._publisher.on(PUBLISHER_EVENTS.streamDestroyed);
+    }
+
 }
