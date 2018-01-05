@@ -81,6 +81,10 @@ export class OpentokService {
         });
     }
 
+    onStreamDestroyed(): Observable<OTStreamEvent> {
+        return this._session.on(SESSION_EVENTS.streamDestroyed);
+    }
+
     onEndCall(): Observable<OTConnectionEvent> {
         return this._session.on(SESSION_EVENTS.connectionDestroyed);
     }
@@ -150,9 +154,4 @@ export class OpentokService {
     onMediaAccessAllowed(): Observable<OTEvent> {
         return this._publisher.on(PUBLISHER_EVENTS.accessAllowed);
     }
-
-    onStreamDestroyed(): Observable<OTEvent> {
-        return this._publisher.on(PUBLISHER_EVENTS.streamDestroyed);
-    }
-
 }
