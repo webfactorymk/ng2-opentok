@@ -106,6 +106,13 @@ export class OpentokService {
             });
     }
 
+    onAudioChanged(): Observable<OTStreamPropertyChangedEvent> {
+        return this._session.on(SESSION_EVENTS.streamPropertyChanged)
+            .filter((event: OTStreamPropertyChangedEvent) => {
+                return event.hasAudioChanged();
+            });
+    }
+
     //https://tokbox.com/developer/guides/signaling/js/
     // Signal type should be a string of only the custom type without the 'signal:' key as said in the documentation.
     sendSignal(signalType?: string, data?: string): Observable<boolean> {
